@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="How the Experience Fitness website was built and validated.">
+    <meta name="author" content="Balakhazy Askar">
+    <title>Experience Fitness — Colophon</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/askar.css">
+</head>
+<body>
+
+<!-- Page author: Balakhazy Askar -->
+
+<header>
+    <img class="logo-mark" src="images/logo-EF.webp
+" alt="Experience Fitness logo">
+    <h1>Experience Fitness</h1>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="registration.html">Registration</a></li>
+            <li><a href="booking.html">Book a Trial Session</a></li>
+            <li><a class="active" href="colophon.html">Colophon</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+
+    <h2>Behind the Scenes</h2>
+    <p>
+        Every line on this site was typed by hand, no drag-and-drop builders, no templates
+        downloaded from somewhere else. I kept the editor of choice to <code>JetBrains WebStorm</code>
+        for the whole project, mostly because of its autocomplete and instant error highlighting -
+        both saved me from a lot of typos while working through four pages. Since all four pages
+        share the same header, nav, main, and footer skeleton, I built that structure once on the
+        home page and then copied it over, swapping in new content each time.
+    </p>
+
+    <!--
+    Why h3 subsections instead of separate <section> elements:
+    all three parts (editor, formatting, validation) are steps of
+    one continuous process, not independent standalone topics,
+    so plain subheadings fit better than wrapping each in <section>.
+-->
+    <h3>Keeping the Formatting structure</h3>
+    <p>
+        Before checking each file, I reformatted it with WebStorm's built-in shortcut:
+    </p>
+    <pre><kbd>Ctrl+Alt+L</kbd></pre>
+    <p>That alone fixed most of the spacing issues without me having to hunt for them manually.</p>
+
+    <h3>Checking the Markup</h3>
+    <p>
+        Rather than trust that the HTML was correct just because it looked fine in the browser,
+        I ran each file through the
+        <a href="https://validator.w3.org/" target="_blank" rel="noopener noreferrer">W3C Markup Validation Service</a>
+        by uploading it directly, one page at a time. A clean file returns something along these lines:
+    </p>
+    <pre><samp>Document checking completed. No errors or warnings to show.</samp></pre>
+    <p>
+        The first pass on <code>registration.html</code> actually came back with three errors -
+        spaces inside the image file names in the <code>src</code> attribute, which the
+        validator flags as an illegal character in a path segment. Renaming the files to use
+        hyphens instead of spaces (for example, <code>technogym-equipment.png</code>) fixed it.
+    </p>
+
+    <!--
+        Why no div here instead of section/article:
+        all content on this page is one continuous narrative
+        about the process, so a wrapping div isn't needed.
+    -->
+
+</main>
+
+<footer class="site-footer">
+    <img class="logo-mark" src="images/logo-EF.webp
+" alt="Experience Fitness logo">
+    <p class="copyright">&copy; 2026 Experience Fitness</p>
+</footer>
+
+</body>
+</html>

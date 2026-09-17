@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Create an account at Experience Fitness.">
+    <meta name="author" content="Balakhazy Askar">
+    <title>Experience Fitness — Registration</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/askar.css">
+</head>
+<body>
+
+<!-- Page author: Balakhazy Askar -->
+
+<header>
+    <img class="logo-mark" src="images/logo-EF.webp
+" alt="Experience Fitness logo">
+    <h1>Experience Fitness</h1>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a class="active" href="registration.html">Registration</a></li>
+            <li><a href="booking.html">Book a Trial Session</a></li>
+            <li><a href="colophon.html">Colophon</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main class="registration-main">
+
+    <!--
+        div is used here only as a wrapper to group the form and its
+        helper text together — no semantic tag fit since this isn't
+        a standalone article/section.
+    -->
+    <div class="registration-card">
+        <!--
+            span is used here only to wrap a short inline note — it's not
+            emphasis, not a definition, not a citation, so none of the
+            semantic inline tags apply; it's purely a styling/grouping hook.
+        -->
+        <span class="registration-note">Takes less than a minute.</span>
+
+        <h2>Registration</h2>
+
+        <form method="post" action="#">
+            <!-- there is no server yet -->
+            <fieldset>
+                <legend>Account Details</legend>
+
+                <p>
+                    <label for="account">Account name</label>
+                    <input type="text" id="account" name="account" placeholder="Username" required>
+                </p>
+
+                <p>
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Your name" required>
+                </p>
+
+                <p>
+                    <label for="phone">Telephone</label>
+                    <input type="tel" id="phone" name="phone" placeholder="+7" required>
+                </p>
+
+                <p>
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="@example.com" required>
+                </p>
+
+                <p>
+                    <button type="submit">Register</button>
+                    <button type="reset">Clear</button>
+                </p>
+            </fieldset>
+        </form>
+    </div>
+
+</main>
+
+<a class="cta-button" href="booking.html">Book a trial</a>
+
+<footer class="site-footer">
+    <img class="logo-mark" src="images/logo-EF.webp
+" alt="Experience Fitness logo">
+    <p class="copyright">&copy; 2026 Experience Fitness</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Book a trial session at Experience Fitness and see the club's opening hours.">
+    <meta name="author" content="Balakhazy Askar">
+    <title>Experience Fitness — Book a Trial Session</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/askar.css">
+</head>
+<body>
+
+<!-- Page author: Balakhazy Askar -->
+
+<header>
+    <img class="logo-mark" src="images/logo-EF.webp
+" alt="Experience Fitness logo">
+    <h1>Experience Fitness</h1>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="registration.html">Registration</a></li>
+            <li><a class="active" href="booking.html">Book a Trial Session</a></li>
+            <li><a href="colophon.html">Colophon</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+
+    <section>
+        <h2>Book a Trial Session</h2>
+        <p>
+            Not ready to commit to a full membership yet? A trial session is the easiest way to see
+            the club, meet the team, and try out the equipment before you decide.
+        </p>
+    </section>
+
+    <section class="trial-cards">
+        <article class="trial-card">
+            <h3>Duration</h3>
+            <p>About 45 minutes, no rush.</p>
+        </article>
+        <article class="trial-card">
+            <h3>Guided Tour</h3>
+            <p>A quick walk through the club and equipment.</p>
+        </article>
+        <article class="trial-card">
+            <h3>One Class</h3>
+            <p>Martial arts, yoga, pilates, or general fitness — your pick.</p>
+        </article>
+    </section>
+
+    <aside class="hours">
+        <h3>Opening Hours</h3>
+        <div class="hours-grid">
+            <span>Mon&ndash;Fri</span><span>07:00&ndash;23:00</span>
+            <span>Saturday</span><span>09:00&ndash;22:00</span>
+            <span>Sunday</span><span>Closed</span>
+        </div>
+        <p><small>Trial sessions can be booked at any time the club is open.</small></p>
+    </aside>
+
+    <!--
+        div is used here only as a wrapper to group the form and its
+        helper text together — no semantic tag fit since this isn't
+        a standalone article/section.
+    -->
+    <div class="booking-form-wrap">
+        <!--
+            span is used here only to wrap a short inline note next to the
+            form heading — it's not emphasis, not a definition, not a citation,
+            so none of the semantic inline tags apply; it's purely a
+            styling/grouping hook with no semantic meaning of its own.
+        -->
+        <span class="registration-note">Requests are processed manually by our front desk team.</span>
+
+        <h3>Booking Form</h3>
+
+        <form method="post" action="#">
+            <!-- there is no server yet -->
+            <fieldset>
+                <legend>Booking Details</legend>
+
+                <p>
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Your name" required>
+                </p>
+
+                <p>
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="@example.com" required>
+                </p>
+
+                <p>
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" name="phone" placeholder="+7">
+                </p>
+
+                <p>
+                    <label for="age">Age</label>
+                    <input type="number" id="age" name="age" min="14" max="90">
+                </p>
+
+                <p>
+                    <label for="visit-date">Preferred Visit Date</label>
+                    <input type="date" id="visit-date" name="visit-date">
+                </p>
+
+                <fieldset>
+                    <legend>Fitness Level</legend>
+                    <p>
+                        <input type="radio" id="level-beginner" name="level" value="beginner">
+                        <label for="level-beginner">Beginner</label>
+                    </p>
+                    <p>
+                        <input type="radio" id="level-medium" name="level" value="medium">
+                        <label for="level-medium">Intermediate</label>
+                    </p>
+                    <p>
+                        <input type="radio" id="level-advanced" name="level" value="advanced">
+                        <label for="level-advanced">Advanced</label>
+                    </p>
+                </fieldset>
+
+                <p>
+                    <input type="checkbox" id="agree" name="agree">
+                    <label for="agree">I agree to the club rules</label>
+                </p>
+
+                <p>
+                    <label for="goal">Your Goal</label>
+                    <select id="goal" name="goal">
+                        <option value="">Select an option</option>
+                        <option value="weight-loss">Weight loss</option>
+                        <option value="muscle">Muscle gain</option>
+                        <option value="fitness">General fitness</option>
+                    </select>
+                </p>
+
+                <p>
+                    <label for="comment">Comment</label>
+                    <textarea id="comment" name="comment" placeholder="Additional notes"></textarea>
+                </p>
+
+                <p>
+                    <button type="submit">Send Request</button>
+                    <button type="reset">Clear Form</button>
+                </p>
+            </fieldset>
+        </form>
+    </div>
+
+</main>
+
+<footer class="site-footer">
+    <img class="logo-mark" src="images/logo-EF.webp
+" alt="Experience Fitness logo">
+    <p class="copyright">&copy; 2026 Experience Fitness</p>
+</footer>
+
+</body>
+</html>

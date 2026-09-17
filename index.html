@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Experience Fitness - a fitness club in Astana">
+    <meta name="author" content="Balakhazy Askar">
+    <title>Experience Fitness — Home</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/askar.css">
+</head>
+<body>
+
+<!-- Page author:Balakhazy Askar -->
+
+<!--
+    Why nav nested inside header instead of a wrapping div:
+    header holds the site identity (logo + name), nav holds the site's
+    link list — nesting nav inside header lets one flex row lay out
+    both without adding a layout-only div around them.
+-->
+<header>
+    <img class="logo-mark" src="images/logo-EF.webp" alt="Experience Fitness logo">
+    <h1>Experience Fitness</h1>
+
+    <nav>
+        <ul>
+            <li><a class="active" href="index.html">Home</a></li>
+            <li><a href="registration.html">Registration</a></li>
+            <li><a href="booking.html">Book a Trial Session</a></li>
+            <li><a href="colophon.html">Colophon</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main class="home-main">
+
+    <section class="about">
+        <h2>About the Club</h2>
+        <p>
+            <img class="logo-mark" src="images/logo-EF.webp" alt="Experience Fitness logo">
+            Experience Fitness is a full-service fitness club in Astana, offering martial arts,
+            yoga, pilates, stretching, personal training, and more — all in one welcoming space.
+        </p>
+    </section>
+
+    <section class="bento">
+        <h3>Gym Photos</h3>
+        <figure>
+            <span class="badge">Open now</span>
+            <img src="images/main.png" alt="Main">
+        </figure>
+        <figure>
+            <img src="images/main.gym.png" alt="gym1">
+        </figure>
+        <figure>
+            <img src="images/gym.png" alt="Group training area">
+        </figure>
+    </section>
+
+    <!--
+        Why section, not div, for both blocks below:
+        each is a standalone, self-contained piece of content (pricing data,
+        contact details) with its own heading, so section fits better than
+        a generic div even though they sit side by side visually.
+    -->
+    <section class="pricing">
+        <h3 id="price-table">Membership Plans</h3>
+        <table class="plans-table">
+            <caption>Current prices, listed in <abbr title="Kazakhstani Tenge">KZT</abbr></caption>
+            <thead>
+            <tr>
+                <th scope="col">Plan</th>
+                <th scope="col">Duration</th>
+                <th scope="col">Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">Monthly Membership</th>
+                <td>1 month</td>
+                <td>from 14,158 KZT</td>
+            </tr>
+            <tr>
+                <th scope="row">Annual Membership</th>
+                <td>12 months</td>
+                <td class="price-highlight">from 169,900 KZT</td>
+            </tr>
+            <tr>
+                <th scope="row">Single Visit</th>
+                <td>1 visit</td>
+                <td>available at the front desk</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section class="contacts">
+        <h3>Contacts</h3>
+        <address>
+            6 Sanzhar Asfendiyarov St. &middot; Astana
+        </address>
+        <a href="mailto:info@experiencefitness.kz">info@experiencefitness.kz</a>
+        <br>
+        <a href="tel:+77783457405">+7 778 345 74 05 (sales)</a>
+        <br>
+        <a href="tel:+77086475383">+7 708 647 53 83 (front desk)</a>
+    </section>
+
+</main>
+
+<!--
+    Why footer instead of div:
+    it only holds the logo and copyright — the standard
+    purpose of footer, no extra div needed here.
+-->
+<footer class="site-footer">
+    <img class="logo-mark" src="images/logo-EF.webp" alt="Experience Fitness logo">
+    <p class="copyright">&copy; 2026 Experience Fitness</p>
+</footer>
+
+<a id="book-cta" class="cta-button" href="booking.html">Book a trial</a>
+
+</body>
+</html>
