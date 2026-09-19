@@ -1,0 +1,357 @@
+/*
+  Palette (5 max)
+  white (named colour) - main page background, keeps the site light and clean
+  #111111 (near-black) - primary text, header and footer background
+  #6FCF3D (green)       - accent ONLY: CTA button, active nav item, hover, badge - taken from the XF logo mark
+  #F2F2F2 (light grey)  - card/section backgrounds, separates content from the white page background
+  #666666 (mid grey)    - secondary/muted text (captions, small print)
+*/
+
+:root {
+    --color-bg: white;
+    --color-black: #111111;
+    --color-green: #6FCF3D;
+    --color-card: #F2F2F2;
+    --color-muted: #666666;
+
+    --font-heading: "Bebas Neue", "Arial Narrow", sans-serif;
+    --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Universal selector: box-sizing reset + Firefox scrollbar colour, in one place */
+* {
+    box-sizing: border-box;
+    scrollbar-color: #6FCF3D var(--color-black);
+    scrollbar-width: thin;
+}
+
+body {
+    margin: 0;
+    background-color: var(--color-bg);
+    color: var(--color-black);
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+}
+
+/* Grouping selector: all headings share one font family and colour */
+h1, h2, h3 {
+    font-family: var(--font-heading);
+    color: var(--color-black);
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    margin: 0 0 12px;
+}
+
+h1 { font-size: 28px; line-height: 1.2; }
+h2 { font-size: 22px; line-height: 1.3; }
+h3 { font-size: 18px; line-height: 1.3; }
+
+p {
+    margin: 0 0 16px;
+}
+
+a {
+    color: var(--color-black);
+    text-decoration: none;
+}
+
+/* Positioning: relative, used as an explicit reference point for absolutely
+   positioned children elsewhere on the page (e.g. the badge inside .bento) */
+header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 24px;
+    background-color: var(--color-black);
+}
+
+.logo-mark {
+    height: 32px;
+    width: auto;
+}
+
+/* Flexbox: navigation is a flex row per the assignment's own requirement */
+header nav ul {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 24px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Descendant selector: only links inside the nav list get this treatment, not links elsewhere */
+header nav ul a {
+    color: white;
+    font-size: 14px;
+    position: relative;
+}
+
+/* Class selector: marks the current page's nav item - accent colour, used sparingly */
+header nav ul a.active {
+    color: var(--color-green);
+}
+
+/* :hover + ::after: a small green underline grows in on hover, instead of a colour change everywhere */
+header nav ul a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-green);
+    transition: width 0.15s ease;
+}
+
+header nav ul a:is(:hover, :focus)::after {
+    width: 100%;
+}
+
+/* Default: simple single-column container for every page except the home page */
+main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 24px;
+}
+
+/* Child combinator: only sections that are DIRECT children of the home page's main are full-width by default */
+.home-main {
+    display: grid;
+    grid-template-columns: minmax(240px, 2fr) minmax(180px, 1fr);
+    gap: 32px;
+}
+
+.home-main > section {
+    grid-column: 1 / -1;
+}
+
+/* Class selector: the "about" block gets a floated image at its start */
+.about img.logo-mark {
+    float: left;
+    margin: 0 16px 8px 0;
+    width: 60px;
+    height: 60px;
+    background-color: var(--color-black);
+    border-radius: 8px;
+    padding: 8px;
+}
+
+/*
+  Adjacent sibling selector: clears the float from .about so the very next
+  section starts on a clean new line instead of wrapping up beside the image.
+  Margin collapse note: because main is a grid container, the bottom margin
+  of the paragraph inside .about and the top margin of the next section's
+  heading do NOT collapse into each other (grid creates a new block
+  formatting context) - in normal flow without grid they would have.
+*/
+.about + section {
+    clear: both;
+}
+
+/* Grid: simple row of 3 equal, tall photo cards - repeat(), fr units, gap.
+   Row 1 is the heading (auto height); row 2 holds the three photos. */
+.bento {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto 420px;
+    gap: 12px;
+}
+
+.bento h3 {
+    grid-column: 1 / -1;
+}
+
+.bento figure {
+    margin: 0;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.bento img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.bento figcaption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 6px 10px;
+    background-color: rgba(17, 17, 17, 0.7);
+    color: white;
+    font-size: 12px;
+}
+
+/* :first-child: a thin green border marks the first photo as the featured one - one accent border, not a rule applied to every card */
+.bento figure:first-child {
+    border: 2px solid var(--color-green);
+}
+
+/*
+  Positioning: absolute badge inside a relative figure, small
+  "confirmation" style chip, green accent only.
+*/
+.badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background-color: white;
+    color: var(--color-green);
+    border: 1px solid var(--color-green);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 4px;
+}
+
+.pricing,
+.contacts {
+    grid-row: 3;
+    background-color: var(--color-card);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.home-main > .pricing { grid-column: 1; }
+.home-main > .contacts { grid-column: 2; }
+
+/* Id selector: unique per-page anchor target for the fixed booking button's href="#price-table" */
+#price-table {
+    scroll-margin-top: 20px;
+}
+
+.plans-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+}
+
+.plans-table caption {
+    text-align: left;
+    color: var(--color-muted);
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+
+.plans-table th,
+.plans-table td {
+    text-align: left;
+    padding: 8px 6px;
+    border-bottom: 1px solid white;
+}
+
+/* Highlight the key number (the annual plan's price) - a small accent use, not a whole green row */
+.plans-table .price-highlight {
+    color: var(--color-green);
+    font-weight: 600;
+}
+
+/* Attribute selector: style mailto links specifically, differently from tel/other links */
+.contacts a[href^="mailto:"] {
+    text-decoration: underline;
+}
+
+/* Positioning: fixed element that stays on screen while the page scrolls - the only solid-green surface on the page */
+.cta-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--color-black);
+    color: white;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    padding: 12px 20px;
+    border-radius: 6px;
+    border: 2px solid var(--color-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cta-button:is(:hover, :focus) {
+    background-color: var(--color-green);
+    color: var(--color-black);
+}
+
+.site-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 24px;
+    background-color: var(--color-black);
+}
+
+/* Margin auto: centring technique #1, applied to the footer logo */
+.site-footer .logo-mark {
+    margin: 0 auto;
+    display: block;
+}
+
+.copyright {
+    margin: 0;
+    font-size: 13px;
+    color: white;
+}
+
+/* Shared code/pre/kbd/samp styling - only really used on colophon.html, but lives here since it's basic typography, not page-specific layout */
+code,
+kbd,
+samp {
+    font-family: "Menlo", "Consolas", monospace;
+    background-color: var(--color-card);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+pre {
+    background-color: var(--color-black);
+    color: white;
+    padding: 12px 16px;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+pre code,
+pre kbd,
+pre samp {
+    background: none;
+    padding: 0;
+    color: inherit;
+}
+
+/* Shimmering scrollbar thumb - a moving green gradient, animated via background-position */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-black);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #6FCF3D, #aef27f, #6FCF3D);
+    background-size: 100% 200%;
+    border-radius: 6px;
+    animation: scrollbar-shimmer 3s linear infinite;
+}
+
+@keyframes scrollbar-shimmer {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 200%; }
+}
+
+/* Firefox scrollbar coloring lives on the same universal selector as the box-sizing reset above */

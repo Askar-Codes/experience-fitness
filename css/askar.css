@@ -1,0 +1,122 @@
+/*
+  Personal stylesheet - Balakhazy Askar
+  Covers content specific to registration.html and booking.html.
+  Shared chrome (header, nav, footer, palette, typography) stays in base.css.
+*/
+
+/* Registration: a single centred card instead of a full-width form */
+.registration-main {
+    display: flex;
+    justify-content: center;
+}
+
+.registration-card {
+    max-width: 380px;
+    width: 100%;
+    background-color: var(--color-card);
+    border-radius: 12px;
+    padding: 28px;
+}
+
+.registration-note {
+    display: block;
+    font-size: 12px;
+    color: var(--color-muted);
+    margin-bottom: 12px;
+}
+
+/* Form fields shared between the registration and booking pages */
+fieldset {
+    border: none;
+    padding: 0;
+    margin: 0 0 16px;
+}
+
+legend {
+    font-family: var(--font-heading);
+    font-size: 14px;
+    letter-spacing: 0.03em;
+    margin-bottom: 8px;
+    padding: 0;
+}
+
+label {
+    display: block;
+    font-size: 13px;
+    color: var(--color-muted);
+    margin-bottom: 4px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 14px;
+    background-color: white;
+}
+
+:is(input, select, textarea):focus {
+    outline: none;
+    border-color: var(--color-green);
+}
+
+button {
+    font-family: var(--font-heading);
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    padding: 10px 18px;
+    border-radius: 6px;
+    border: 2px solid var(--color-black);
+    background-color: var(--color-black);
+    color: white;
+    cursor: pointer;
+}
+
+button:is(:hover, :focus) {
+    background-color: var(--color-green);
+    border-color: var(--color-green);
+    color: var(--color-black);
+}
+
+button[type="reset"] {
+    background-color: white;
+    color: var(--color-black);
+}
+
+button[type="reset"]:hover {
+    background-color: var(--color-card);
+    border-color: var(--color-black);
+}
+
+/* Booking: flex row of trial-session cards, wraps on a narrower window */
+.trial-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.trial-card {
+    flex: 1 1 200px;
+    background-color: var(--color-card);
+    border-radius: 8px;
+    padding: 16px;
+}
+
+/* Booking: opening hours as a simple two-column grid instead of a table */
+.hours-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px 16px;
+    margin-bottom: 12px;
+}
+
+.booking-form-wrap {
+    background-color: var(--color-card);
+    border-radius: 12px;
+    padding: 24px;
+    max-width: 480px;
+}
