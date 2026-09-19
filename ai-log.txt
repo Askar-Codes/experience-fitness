@@ -1,0 +1,16 @@
+AI LOG — Experience Fitness website
+Author: Balakhazy Askar
+
+Assignment 1: I used AI  to help write some of the body text on the site,
+since English is not my first language. All real facts (prices, address, hours)
+came from me, not the AI.
+
+Assignment 2: I used AI to talk through layout and color ideas — for example,
+picking a palette based on photos of the actual gym, and deciding where flexbox
+made more sense than grid. I also used it to help debug a real CSS specificity
+bug I ran into (a table getting hidden behind another block because of a rule
+priority conflict), and to figure out why my bento grid math was off after I
+added a heading inside the grid container.
+
+I wrote the HTML and CSS myself. AI was used for wording, ideas, and debugging
+help, not for generating the site's structure or styling on its own.
