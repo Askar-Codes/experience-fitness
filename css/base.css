@@ -105,6 +105,45 @@ h1, h2, .display-5, .display-6 {
     right: 20px;
 }
 
+/*
+   Bootstrap still draws the navbar, the burger icon and
+  the links; here we only add the open/close behaviour:
+  a hidden checkbox (#navToggle) remembers the state, its <label> is the
+  burger button, and :checked opens the menu with a smooth transition.
+*/
+.nav-menu {
+    max-height: 0;
+    overflow: hidden;
+    visibility: hidden; /* keeps hidden links out of keyboard tab order */
+    transition: max-height 0.8s ease, visibility 0s 0.3s;
+}
+
+#navToggle:checked ~ .nav-menu {
+    max-height: 250px;
+    visibility: visible;
+    transition: max-height 0.8s ease, visibility 0s;
+}
+
+/* A label is not a button by default, so give it the pointer cursor and the same box as a button */
+.navbar-toggler {
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* Keyboard focus ring on the burger (the real focus sits on the hidden checkbox) */
+#navToggle:focus-visible ~ .navbar-toggler {
+    box-shadow: 0 0 0 0.25rem rgba(111, 207, 61, 0.5);
+}
+
+/* From 992px (same breakpoint as navbar-expand-lg) the links are always visible in a row */
+@media (min-width: 992px) {
+    .nav-menu {
+        max-height: none;
+        overflow: visible;
+        visibility: visible;
+    }
+}
+
 /* Shimmering scrollbar thumb - not a Bootstrap feature, kept from Assignment 2 */
 ::-webkit-scrollbar { width: 12px; }
 ::-webkit-scrollbar-track { background: var(--color-black); }
