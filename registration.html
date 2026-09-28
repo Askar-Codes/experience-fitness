@@ -19,13 +19,19 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid px-4">
             <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
-                <img src="images/logo-EF.webp" alt="Experience Fitness logo" class="logo-mark" height="32">
+                <img src="images/logo-EF.webp" alt="Experience Fitness logo" height="32">
                 Experience Fitness
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <!--
+                Burger menu : the hidden checkbox remembers open/closed,
+                the label is the burger button, and base.css opens the menu on :checked
+                with a transition.
+            -->
+            <input type="checkbox" id="navToggle" class="visually-hidden" aria-label="Toggle navigation" aria-controls="navMenu">
+            <label for="navToggle" class="navbar-toggler">
                 <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navMenu">
+            </label>
+            <div class="navbar-collapse nav-menu" id="navMenu">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link active" aria-current="page" href="registration.html">Registration</a></li>
@@ -84,6 +90,5 @@
     <p class="text-white-50 small mb-0">&copy; 2026 Experience Fitness</p>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
