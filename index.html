@@ -145,3 +145,193 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+
+<!--
+BOOTSTRAP BASIC
+
+Файлы: index.html, registration.html, booking.html
+Стили: css/base.css (общие), css/askar.css (личные)
+Меню (navbar) одинаковое в ТРЁХ файлах: правка меню делается в каждом.
+
+ГДЕ ЧТО ЛЕЖИТ:
+Меню и бургер        — верх каждого html (navbar)
+Галерея фото         — index.html: row g-3 ... gym-gallery
+Прайс и контакты     — index.html: container, row g-4, col-lg-8 и col-lg-4
+Три карточки         — booking.html: row g-3, col-md-4
+Часы работы          — booking.html: d-flex justify-content-between
+Форма записи         — booking.html: card, вложенный row g-3
+Форма регистрации    — registration.html: col-12 col-md-6 col-lg-4
+Цвета, шрифты, футер — css/base.css
+
+
+1. СОЗДАТЬ КНОПКУ:
+<button type="button" class="btn btn-success">Записаться</button>
+
+Кнопка отправки формы (как в booking.html):
+<button type="submit" class="btn btn-success btn-lg">Send Request</button>
+
+
+2. СОЗДАТЬ КНОПКУ ПЕРЕХОДА (ссылка в виде кнопки):
+<a href="booking.html" class="btn btn-success">Book a trial</a>
+
+Как плавающая кнопка на index.html (прибита к углу окна):
+<a href="booking.html" class="btn btn-success position-fixed floating-book-btn">Book a trial</a>
+(bottom и right для неё заданы в base.css, класс floating-book-btn)
+
+
+3. ПОМЕНЯТЬ ЦВЕТ — заменить вариант, btn оставить:
+btn-success   — зелёная (в проекте перекрашена в наш #6FCF3D)
+btn-primary   — синяя
+btn-danger    — красная
+btn-warning   — жёлтая
+btn-secondary — серая
+btn-dark      — тёмная
+Наш зелёный задан в base.css (.btn-success), остальные цвета стандартные.
+
+
+4. СДЕЛАТЬ КОНТУРНУЮ (как Register в registration.html):
+<button type="submit" class="btn btn-outline-success">Register</button>
+<button type="reset" class="btn btn-outline-secondary">Clear</button>
+
+
+5. ИЗМЕНИТЬ РАЗМЕР:
+btn-lg — большая (Send Request в booking.html)
+btn-sm — маленькая (Clear в registration.html)
+Убрать btn-lg / btn-sm — обычная
+
+
+6. ОТКЛЮЧИТЬ КНОПКУ:
+<button type="button" class="btn btn-secondary" disabled>Недоступно</button>
+Чтобы включить — убрать disabled.
+Для ссылки-кнопки: <a class="btn btn-secondary disabled" aria-disabled="true">Недоступно</a>
+
+
+7. КНОПКА НА ВСЮ ШИРИНУ:
+<button type="submit" class="btn btn-success w-100">Register</button>
+(если рядом стоит вторая кнопка, она уйдёт на следующую строку)
+
+
+8. КНОПКА ПО ЦЕНТРУ:
+<div class="text-center">
+    <button type="submit" class="btn btn-outline-success">Register</button>
+</div>
+
+
+9. ДВА БЛОКА РЯДОМ ОТ ПЛАНШЕТА:
+<div class="row g-4">
+    <section class="col-12 col-md-6">Первый</section>
+    <section class="col-12 col-md-6">Второй</section>
+</div>
+
+Прайс и контакты (index.html) сейчас рядом от 992px (col-lg-8 и col-lg-4).
+Поставить рядом уже на планшете (от 768px):
+col-lg-8 заменить на col-md-8, col-lg-4 заменить на col-md-4.
+
+
+10. ТРИ БЛОКА РЯДОМ НА КОМПЬЮТЕРЕ (карточки в booking.html):
+<div class="row g-3">
+    <div class="col-12 col-md-6 col-lg-4">Первый</div>
+    <div class="col-12 col-md-6 col-lg-4">Второй</div>
+    <div class="col-12 col-md-6 col-lg-4">Третий</div>
+</div>
+Сейчас у карточек col-12 col-md-4: три в ряд уже от планшета.
+Нужно "на планшете две, на компьютере три" — заменить col-md-4 на col-md-6 col-lg-4.
+
+Три колонки заменить на две:
+У всех заменить col-lg-4 на col-lg-6 (или col-md-4 на col-md-6).
+
+Фото галереи (index.html) крупнее или мельче:
+col-md-3 заменить на col-md-4 (крупнее) или col-md-2 (мельче).
+Фото остаются по центру благодаря justify-content-center на row.
+
+
+11. ВЫРАВНИВАНИЕ ТЕКСТА:
+text-start  — слева
+text-center — по центру
+text-end    — справа
+text-center text-md-start — на телефоне центр, от планшета слева
+Пример: <h1 class="display-5 fw-bold text-center text-md-start">About the Club</h1>
+
+
+12. СКРЫТЬ НА ТЕЛЕФОНЕ:
+<p class="lead text-muted d-none d-md-block">Дополнительный текст</p>
+
+ПОКАЗЫВАТЬ ТОЛЬКО НА МАЛЕНЬКОМ ЭКРАНЕ:
+<p class="d-md-none">Текст для телефона</p>
+
+
+13. АДАПТИВНАЯ КАРТИНКА:
+Обычная картинка: <img src="images/photo.jpg" class="img-fluid" alt="Фото">
+В карточке (как в галерее): <img src="images/main.png" class="card-img-top" alt="Фото">
+(card-img-top уже растягивает картинку на ширину карточки)
+
+
+14. ИЗМЕНИТЬ ТАБЛИЦУ (index.html, таблица цен):
+table-striped  — полосатые строки (сейчас)
+table-bordered — границы
+table-hover    — подсветка при наведении
+table-dark     — тёмная
+table-sm       — компактная
+Добавить или убрать нужный класс у <table class="table ...">.
+
+
+15. МЕНЮ РАСКРЫВАЕТСЯ РАНЬШЕ:
+navbar-expand-lg заменить на navbar-expand-md.
+(md — раскрыто от 768px, lg — от 992px, xl — от 1200px)
+Менять во всех трёх файлах: index.html, registration.html, booking.html.
+
+
+16. МЕНЮ НЕ ОТКРЫВАЕТСЯ:
+Проверить совпадение data-bs-target="#navMenu" у кнопки и id="navMenu" у блока меню.
+Проверить, что внизу страницы подключён bootstrap.bundle.min.js.
+
+
+17. ПРОМЕЖУТОК МЕЖДУ КОЛОНКАМИ:
+g-0 — вплотную, g-1 g-2 g-3 g-4 g-5 — от малого к большому.
+В проекте: галерея g-3, прайс и контакты g-4, карточки и поля форм g-3.
+Только по горизонтали: gx-3, только по вертикали: gy-3.
+
+
+18. КОНТЕЙНЕР:
+container       — ограниченная ширина, по центру (прайс, registration, booking)
+container-fluid — на всю ширину окна (шапка, блок About и галерея)
+Заменить одно на другое — поменять только это слово.
+
+
+19. ОТСТУПЫ:
+mb-4 (снизу), mt-4 (сверху), py-4 (сверху и снизу), px-4 (слева и справа), p-3 (со всех сторон)
+Число 0–5: 0 нет, 1 малый, 3 средний, 5 самый большой.
+Пример: mb-4 заменить на mb-2 (меньше) или mb-5 (больше).
+
+
+20. ТЕНЬ, ЦВЕТ, ФОРМА:
+Карточка: shadow-sm заменить на shadow или shadow-lg (или убрать).
+Плашка Open now: bg-success заменить на bg-danger, добавить rounded-pill (таблетка).
+Блок контактов: bg-light border rounded (фон, рамка, скругление).
+
+
+21. ЦЕНТРИРОВАТЬ БЛОК:
+Внутри row: добавить justify-content-center к <div class="row ...">
+Обычный блок: добавить mx-auto (нужна ширина, например w-50)
+Картинка в футере: d-block mx-auto
+
+
+22. ПОЛЯ ФОРМЫ (booking.html):
+col-md-6 — два поля в ряд, col-md-4 — три поля в ряд, col-md-3 — четыре поля в ряд.
+Сумма колонок в одном row = 12. Если больше — лишнее переходит на новую строку.
+
+
+23. РАЗМЕР ЗАГОЛОВКА:
+display-4 (самый большой), display-5 (index), display-6 (booking).
+Обычный заголовок другого размера: <h2 class="h4">... — тег h2, вид h4.
+
+
+24. СВОЙ ЦВЕТ БРЕНДА:
+base.css: :root { --color-green: #6FCF3D; } — общий зелёный.
+Кнопки (.btn-success, .btn-outline-success) берут этот цвет.
+Плашка (bg-success) и цена в таблице (text-success) — стандартный тёмно-зелёный Bootstrap.
+
+
+После изменений: Ctrl + S → обновить браузер (если вид не изменился — Ctrl + F5).
+-->
