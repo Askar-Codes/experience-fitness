@@ -14,3 +14,5 @@ added a heading inside the grid container.
 
 I wrote the HTML and CSS myself. AI was used for wording, ideas, and debugging
 help, not for generating the site's structure or styling on its own.
+
+

@@ -1,11 +1,176 @@
 /*
   Personal stylesheet - Balakhazy Askar
-  Assignment 3: almost everything on registration.html and booking.html
-  is now built with Bootstrap classes directly in the HTML (cards, forms,
-  grid). Nothing page-specific was left to write by hand here.
+  Form fields, trial cards and the registration/booking card styling are
+  hand-written again. The responsive column behaviour (stacking on phone,
+  side by side on tablet/desktop) still comes from Bootstrap's row/col-*
+  classes in the HTML - that's the one part of Bootstrap we kept on purpose.
 */
 
-/* Small correction: Bootstrap's default card border is barely visible on white; make it a touch more defined */
-.card {
-    border-color: #e0e0e0;
+.registration-card,
+.booking-form-wrap {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    background-color: var(--color-card);
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.registration-note {
+    display: block;
+    font-size: 12px;
+    color: var(--color-muted);
+    margin-bottom: 12px;
+}
+
+fieldset {
+    border: none;
+    padding: 0;
+    margin: 0 0 16px;
+}
+
+legend {
+    font-family: var(--font-heading);
+    font-size: 14px;
+    letter-spacing: 0.03em;
+    margin-bottom: 8px;
+    padding: 0;
+}
+
+label {
+    display: block;
+    font-size: 13px;
+    color: var(--color-muted);
+    margin-bottom: 4px;
+}
+
+input:not([type="radio"]):not([type="checkbox"]),
+select,
+textarea {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 14px;
+    background-color: white;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    width: auto;
+}
+
+input:is(:focus), select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--color-green);
+}
+
+.form-row {
+    margin-bottom: 16px;
+}
+
+/* Radio/checkbox labels sit next to their input, not stacked like text-field labels */
+.inline-label {
+    display: inline;
+    margin-left: 4px;
+}
+
+/* Trial-session cards (booking.html) - Bootstrap's col-12 col-md-4 handles the responsive stacking */
+.trial-card {
+    background-color: var(--color-card);
+    border-radius: 8px;
+    padding: 16px;
+    height: 100%;
+}
+
+/* Opening hours - fixed 2-column layout, not breakpoint-dependent, so plain CSS grid is fine here */
+.hours-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px 16px;
+    margin-bottom: 12px;
+}
+
+/* ---------- subscribe.html ---------- */
+
+.perk-card {
+    height: 100%;
+    background-color: var(--color-card);
+    border-radius: 8px;
+    padding: 18px;
+    border-top: 3px solid var(--color-green);
+}
+
+.checkout-card {
+    background-color: var(--color-card);
+    border-radius: 12px;
+    padding: 28px;
+}
+
+/* Plan picker: real radio inputs, styled as selectable cards instead of a plain dropdown */
+.plan-picker {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.plan-option {
+    flex: 1 1 160px;
+    cursor: pointer;
+}
+
+.plan-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.plan-option-body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 14px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background-color: white;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.plan-option input[type="radio"]:checked ~ .plan-option-body {
+    border-color: var(--color-green);
+    box-shadow: 0 0 0 1px var(--color-green);
+}
+
+.plan-option input[type="radio"]:focus-visible ~ .plan-option-body {
+    outline: 2px solid var(--color-green);
+    outline-offset: 2px;
+}
+
+.plan-name {
+    font-family: var(--font-heading);
+    letter-spacing: 0.03em;
+}
+
+.plan-price {
+    color: var(--color-muted);
+    font-size: 14px;
+}
+
+.plan-badge {
+    align-self: flex-start;
+    background-color: var(--color-green);
+    color: var(--color-black);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.checkout-submit {
+    width: 100%;
+    margin-top: 20px;
 }
