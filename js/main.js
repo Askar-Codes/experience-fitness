@@ -13,7 +13,7 @@ const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Frid
 // price is null for a single visit because it is paid at the front desk.
 const PLANS = [
     { id: 'monthly', name: 'Monthly Membership', price: 14158, months: 1, payOnline: true },
-    { id: 'annual', name: 'Annual Membership', price: 149900, months: 12, payOnline: true },
+    { id: 'annual', name: 'Annual Membership', price: 169900, months: 12, payOnline: true },
     { id: 'single', name: 'Single Visit', price: null, months: 0, payOnline: false }
 ];
 
@@ -80,8 +80,8 @@ function validateName(value) {
     if (name === '') {
         return 'Enter your name.';
     }
-    if (name.length < 2 || !/^[\p{L}][\p{L}\s'-]*$/u.test(name)) {
-        return 'Use letters only, at least 2 characters.';
+    if (name.length < 2 || !/^[\p{L}][\p{L}\s'.-]*$/u.test(name)) {
+        return 'Use letters only (spaces, dots and hyphens are fine), at least 2 characters.';
     }
     return '';
 }
