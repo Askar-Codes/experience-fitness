@@ -9,7 +9,12 @@ Experience Fitness offers martial arts, yoga, pilates, stretching, personal trai
 Assignment 1 built the HTML structure. Assignment 2 added hand-written CSS. Assignment 3 rebuilt the layout with Bootstrap's grid system only (no other Bootstrap components). The midterm finished the logic across all pages, added confirmation areas and state classes (`hidden`, `selected`, `error`), and prepared `id`s for JavaScript. Assignments 4 and 5 add JavaScript: data and logic (Assignment 4), then DOM, events and form validation (Assignment 5).
 
 There is no server and no database. Every form is checked in the browser only, and every confirmation says that nothing was really booked, paid for or created.
-
+**Final Defense Update:** For the final defense, three features were rewritten using **jQuery** (linked via CDN):
+1. **Form Validation:** Registration page (`registration.js`).
+2. **List Built in Code (Cart):** Subscribe page (`subscribe.js`).
+3. **Show/Hide Block (Cost Estimator):** Home page (`index.js`).
+   The original plain JavaScript versions of these three features are preserved in
+`js/old-js-version.js` for comparison. Shared jQuery helpers were moved to `js/jquery-common.js`.
 ## Author
 
 Balakhazy Askar — working individually.
