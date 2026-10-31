@@ -1,17 +1,18 @@
 'use strict';
 
 /* ==========================================================
-   index.js - index.html: membership cost estimator.
-   Uses the shared PLANS array from main.js, so prices stay
-   the same on the home page and on the purchase page.
+   index.js (jQuery) - index.html: membership cost estimator.
+   jQuery 3.7.1 is linked in index.html before this file.
+   Uses the shared PLANS array from main.js.
+
+   REWRITTEN FEATURE 3 - show and hide of a block (the estimate result).
+   Replaced: document.createElement + append + classList.toggle +
+   addEventListener  ->  $('<div>', {...}) + .append() + .fadeIn()/.fadeOut() + .on().
+   The page code is shorter and chains read top to bottom.
    ========================================================== */
 
 const MAX_ESTIMATE_MONTHS = 60;
-const estimatorRefs = {};
 
-document.addEventListener('DOMContentLoaded', initEstimator);
-
-// Returns what the visitor would pay for the chosen number of months.
 function estimateCost(months) {
     const monthly = findPlan('monthly');
     const annual = findPlan('annual');
@@ -24,85 +25,68 @@ function estimateCost(months) {
     };
 }
 
-function initEstimator() {
-    const host = document.querySelector('.pricing');
-    if (host === null) {
-        return;
-    }
-
-    const wrapper = createEl('div', 'mt-4');
-    const title = createEl('h3', '', 'Estimate your cost');
-    const helper = createEl('p', 'form-helper', 'Enter how many months you plan to train. Prices start from the amounts in the table; the front desk confirms the final price.');
-
-    const form = createEl('form');
-    form.noValidate = true;
-    const row = createEl('div', 'form-row');
-    const label = createEl('label', '', 'Months of training');
-    label.htmlFor = 'js-index-months';
-    const input = createEl('input');
-    input.type = 'number';
-    input.id = 'js-index-months';
-    input.name = 'months';
-    input.min = '1';
-    input.max = String(MAX_ESTIMATE_MONTHS);
-    input.step = '1';
-    input.placeholder = 'e.g. 6';
-    row.append(label, input);
-
-    const calcBtn = createEl('button', 'btn btn-sm', 'Calculate');
-    calcBtn.type = 'submit';
-    const resetBtn = createEl('button', 'btn btn-outline btn-sm', 'Clear');
-    resetBtn.type = 'reset';
-
-    const result = createEl('div', 'confirmation-box hidden');
-    result.id = 'js-index-estimate';
-    result.setAttribute('role', 'status');
-    result.setAttribute('aria-live', 'polite');
-
-    form.append(row, calcBtn, resetBtn);
-    wrapper.append(title, helper, form, result);
-    host.appendChild(wrapper);
-
-    Object.assign(estimatorRefs, { form, input, result });
-
-    form.addEventListener('submit', handleEstimateSubmit);
-    input.addEventListener('input', () => clearFieldError(input));
-    form.addEventListener('reset', () => {
-        clearFieldError(input);
-        hideConfirmation(result);
-    });
-}
-
-function handleEstimateSubmit(event) {
-    event.preventDefault();
-    const { input, result } = estimatorRefs;
-    const months = Number(input.value);
-
-    clearFieldError(input);
-    hideConfirmation(result);
-
-    if (input.value.trim() === '') {
-        setFieldError(input, 'Enter the number of months.');
-        input.focus();
-        return;
-    }
-    if (!Number.isInteger(months) || months < 1 || months > MAX_ESTIMATE_MONTHS) {
-        setFieldError(input, `Enter a whole number from 1 to ${MAX_ESTIMATE_MONTHS}.`);
-        input.focus();
-        return;
-    }
+$(function () {
+    const $host = $('.pricing');
+    if ($host.length === 0) return;
 
     const monthly = findPlan('monthly');
     const annual = findPlan('annual');
-    const cost = estimateCost(months);
-    const annualText = `${cost.annualPacks} x ${formatPrice(annual.price)} = ${formatPrice(cost.annualTotal)} (covers ${cost.coveredMonths} months)`;
 
-    showConfirmation(result, 'success', `estimate for ${months} month(s).`, [
-        ['Monthly plan', `${months} x ${formatPrice(monthly.price)} = ${formatPrice(cost.monthlyTotal)}`],
-        ['Annual plan', annualText]
-    ], 'This is an estimate based on the starting prices. No order is created.');
+    const $input = $('<input>', { type: 'number', id: 'js-index-months', name: 'months', min: 1, max: MAX_ESTIMATE_MONTHS, step: 1, placeholder: 'e.g. 6', required: true });
+    const $calcBtn = $('<button>', { type: 'submit', class: 'btn btn-sm', text: 'Calculate' });
+    const $resetBtn = $('<button>', { type: 'reset', class: 'btn btn-outline btn-sm', text: 'Clear' });
+    const $form = $('<form>').append(
+        $('<div>', { class: 'form-row' }).append($('<label>').attr('for', 'js-index-months').text('Months of training'), $input),
+        $calcBtn, $resetBtn
+    );
+    const $result = $('<div>', { id: 'js-index-estimate', class: 'confirmation-box hidden', role: 'status', 'aria-live': 'polite' });
 
-    const next = createEl('a', 'btn btn-sm', 'Buy a membership');
-    next.href = 'subscribe.html';
-    result.appendChild(next);
-}
+    const $explainBtn = $('<button>', { type: 'button', class: 'btn btn-outline btn-sm', text: 'How is this calculated?', 'aria-expanded': 'false' });
+    const $explain = $('<p>', { class: 'form-helper' })
+        .html(`Monthly: <strong>months x ${formatPrice(monthly.price)}</strong>. Annual: <strong>whole years (rounded up) x ${formatPrice(annual.price)}</strong>.`)
+        .hide();
+
+    $('<div>', { class: 'mt-4' }).append(
+        $('<h3>').text('Estimate your cost'),
+        $('<p>', { class: 'form-helper', text: 'Enter how many months you plan to train. Prices start from the amounts in the table; the front desk confirms the final price.' }),
+        $form, $explainBtn, $explain, $result
+    ).appendTo($host);
+
+    $input.on('input', function () { jqClearFieldError($(this)); });
+
+    $form.on('submit', function (event) {
+        event.preventDefault();
+        const raw = $input.val().trim();
+        const months = Number(raw);
+        jqClearFieldError($input);
+
+        if (raw === '') {
+            jqFieldError($input, 'Enter the number of months.');
+        } else if (!Number.isInteger(months) || months < 1 || months > MAX_ESTIMATE_MONTHS) {
+            jqFieldError($input, `Enter a whole number from 1 to ${MAX_ESTIMATE_MONTHS}.`);
+        }
+        if ($input.hasClass('error')) {
+            jqHideBox($result);
+            $input.trigger('focus');
+            return;
+        }
+
+        const cost = estimateCost(months);
+        jqShowBox($result, 'success', `estimate for ${months} month(s).`, [
+            ['Monthly plan', `${months} x ${formatPrice(monthly.price)} = ${formatPrice(cost.monthlyTotal)}`],
+            ['Annual plan', `${cost.annualPacks} x ${formatPrice(annual.price)} = ${formatPrice(cost.annualTotal)} (covers ${cost.coveredMonths} months)`]
+        ], 'This is an estimate based on the starting prices. No order is created.');
+        $('<a>', { class: 'btn btn-sm', href: 'subscribe.html', text: 'Buy a membership' }).appendTo($result);
+    });
+
+    $form.on('reset', function () {
+        jqClearFieldError($input);
+        jqHideBox($result);
+    });
+
+    $explainBtn.on('click', function () {
+        $explain.slideToggle(200, function () {
+            $explainBtn.attr('aria-expanded', String($(this).is(':visible')));
+        });
+    });
+});
