@@ -5,16 +5,7 @@
    Validation, live summary and a demonstration confirmation.
    ========================================================== */
 
-// Opening hours of the club (same as the hours shown on the page).
-const OPENING_HOURS = [
-    { day: 'Monday', open: 7, close: 23, isOpen: true },
-    { day: 'Tuesday', open: 7, close: 23, isOpen: true },
-    { day: 'Wednesday', open: 7, close: 23, isOpen: true },
-    { day: 'Thursday', open: 7, close: 23, isOpen: true },
-    { day: 'Friday', open: 7, close: 23, isOpen: true },
-    { day: 'Saturday', open: 9, close: 22, isOpen: true },
-    { day: 'Sunday', open: null, close: null, isOpen: false }
-];
+// OPENING_HOURS (the opening hours of the club) is defined once in main.js.
 
 const LEVEL_LABELS = { beginner: 'Beginner', medium: 'Intermediate', advanced: 'Advanced' };
 const GOAL_LABELS = { 'weight-loss': 'Weight loss', muscle: 'Muscle gain', fitness: 'General fitness' };
@@ -149,6 +140,25 @@ function initBooking() {
         return;
     }
     form.noValidate = true;
+
+    // Phone lock: the locked prefix appears on focus, only digits are accepted, 11 digits at most.
+    const phoneInput = byId('js-booking-phone');
+    phoneInput.maxLength = 16;
+    phoneInput.inputMode = 'tel';
+    phoneInput.addEventListener('focus', () => {
+        if (phoneInput.value === '') {
+            phoneInput.value = formatPhone(PHONE_PREFIX);
+        }
+    });
+    phoneInput.addEventListener('input', () => {
+        phoneInput.value = formatPhone(phoneInput.value);
+    });
+    phoneInput.addEventListener('blur', () => {
+        if (keepDigits(phoneInput.value, 20).length <= PHONE_PREFIX.length) {
+            phoneInput.value = ''; // only the prefix is left: the phone is optional here
+        }
+    });
+
     bookingRefs.form = form;
     bookingRefs.box = byId('js-booking-confirmation');
 

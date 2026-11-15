@@ -14,22 +14,26 @@
 </head>
 <body>
 
-<header>
-    <img class="logo-mark" src="images/logo-EF.webp" alt="Experience Fitness logo">
-    <h1>Experience Fitness</h1>
+<header class="main-header">
+    <div class="header-container">
+        <a href="index.html" class="logo">
+            <img src="images/logo-EF.webp" alt="Experience Fitness" class="logo-mark">
+        </a>
 
-    <input type="checkbox" id="navToggle" class="visually-hidden" aria-label="Toggle navigation" aria-controls="navMenu">
-    <label for="navToggle" class="nav-toggler" aria-hidden="true">&#9776;</label>
+        <nav class="main-nav">
+            <ul class="nav-list">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="trainers.html">Trainers</a></li>
+                <li><a href="subscribe.html">Memberships</a></li>
+            </ul>
+        </nav>
 
-    <nav>
-        <ul id="navMenu">
-            <li><a href="index.html">Home</a></li>
-            <li><a class="active" href="trainers.html">Trainers</a></li>
-            <li><a href="registration.html">Registration</a></li>
-            <li><a href="booking.html">Book a Trial Session</a></li>
-            <li><a href="subscribe.html">Buy a Membership</a></li>
-        </ul>
-    </nav>
+        <!-- Right edge: Free Trial and Log In -->
+        <div class="header-actions">
+            <a href="booking.html" class="btn-trial">Free Trial</a>
+            <a href="registration.html" class="btn-login">Log In</a>
+        </div>
+    </div>
 </header>
 
 <main class="container py-4">

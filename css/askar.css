@@ -216,12 +216,12 @@ input:is(:focus), select:focus, textarea:focus {
 
 .trainer-name {
     margin: 0 0 4px 0;
-    font-size: 22px;
+    font-size: 26px;
 }
 
 .trainer-role {
     color: var(--color-green);
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -229,7 +229,7 @@ input:is(:focus), select:focus, textarea:focus {
 }
 
 .trainer-bio {
-    font-size: 14px;
+    font-size: 17px;
     color: var(--color-muted);
     margin: 0 0 16px 0;
     flex-grow: 1;
@@ -240,7 +240,7 @@ input:is(:focus), select:focus, textarea:focus {
     padding-left: 12px;
     border-left: 3px solid var(--color-green);
     font-style: italic;
-    font-size: 13px;
+    font-size: 16px;
     color: var(--color-black);
 }
 /* ==========================================================
@@ -254,7 +254,7 @@ input:is(:focus), select:focus, textarea:focus {
     flex-direction: column;
     gap: 4px;
     margin: 0 0 16px;
-    font-size: 13px;
+    font-size: 16px;
 }
 
 /* Summary lists inside confirmation boxes (built by JavaScript) */
@@ -682,4 +682,131 @@ input:is(:focus), select:focus, textarea:focus {
     .cart-line {
         grid-template-columns: 1fr auto;
     }
+}
+/* =========================================
+   ТЕМНАЯ ШАПКА И МЕНЮ
+   ========================================= */
+.main-header {
+    background-color: #111;
+    padding: 15px 0;
+}
+
+/* Увеличиваем максимальную ширину почти на весь экран */
+.header-container {
+    display: flex;
+    flex-wrap: wrap; /* on narrow screens the blocks move to the next line instead of overflowing */
+    align-items: center;
+    justify-content: space-between; /* Logo on the left, actions pressed to the right edge */
+    width: 100%; /* base.css makes <header> a flex box; without this the container shrinks to its content and sits in the middle */
+    max-width: 100%;
+    gap: 12px 0;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* Логотип */
+.logo {
+    display: flex;
+    align-items: center;
+    flex: 1 1 0; /* the logo and the right part take equal space, so the menu sits exactly in the centre */
+}
+.logo-mark {
+    height: 40px;
+    width: auto;
+}
+
+/* Menu in the centre of the header */
+.main-nav {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: center;
+    padding: 0 24px; /* keeps the menu away from the logo and from the right part */
+}
+
+/* Увеличиваем расстояние между ссылками */
+.nav-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 36px; /* medium distance between Home, Trainers and Memberships */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    /* This header has no burger button, so the mobile rules of base.css (nav ul: hidden) must not apply */
+    flex-direction: row;
+    align-items: center;
+    width: auto;
+    max-height: none;
+    overflow: visible;
+    visibility: visible;
+}
+
+.nav-list a {
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    color: #fff;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+}
+
+.nav-list a:hover,
+.nav-list a.active {
+    color: #8cc63f;
+}
+
+/* Правый блок (Log In, Free Trial, Язык) */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 22px; /* Distance between the items of the right part */
+    flex: 1 1 0; /* same share as the logo: the menu stays in the centre */
+    justify-content: flex-end; /* the right part is pressed to the right edge */
+}
+
+.btn-login {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+.btn-login:hover {
+    color: #8cc63f;
+}
+
+.btn-trial {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    background-color: transparent;
+    border: 2px solid #8cc63f;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+.btn-trial:hover {
+    background-color: #8cc63f;
+    color: #111;
+}
+
+.lang-switch {
+    font-size: 14px;
+    font-weight: 600;
+    color: #888;
+    margin-left: 10px;
+}
+.lang-active {
+    color: #fff;
+}
+.lang-link {
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+.lang-link:hover {
+    color: #fff;
+}
+.lang-divider {
+    margin: 0 5px;
+    color: #555;
 }

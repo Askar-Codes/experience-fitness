@@ -13,8 +13,20 @@ const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Frid
 // price is null for a single visit because it is paid at the front desk.
 const PLANS = [
     { id: 'monthly', name: 'Monthly Membership', price: 14158, months: 1, payOnline: true },
-    { id: 'annual', name: 'Annual Membership', price: 169900, months: 12, payOnline: true },
+    { id: 'annual', name: 'Annual Membership', price: 149900, months: 12, payOnline: true },
     { id: 'single', name: 'Single Visit', price: null, months: 0, payOnline: false }
+];
+
+// Opening hours of the club: used by the home page (live "Open now" status, hours list)
+// and by the booking form, so the hours are written in one place only.
+const OPENING_HOURS = [
+    { day: 'Monday', open: 7, close: 23, isOpen: true },
+    { day: 'Tuesday', open: 7, close: 23, isOpen: true },
+    { day: 'Wednesday', open: 7, close: 23, isOpen: true },
+    { day: 'Thursday', open: 7, close: 23, isOpen: true },
+    { day: 'Friday', open: 7, close: 23, isOpen: true },
+    { day: 'Saturday', open: 9, close: 22, isOpen: true },
+    { day: 'Sunday', open: null, close: null, isOpen: false }
 ];
 
 // ---------- DOM helpers ----------
@@ -94,12 +106,67 @@ function validateEmail(value) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) ? '' : 'Enter an email like name@example.com.';
 }
 
+// Phone lock: a number is the country code 7 and 10 more digits (11 digits in total) and it must
+// start with the locked prefix. PHONE_PREFIX = '777' means "+777": country code 7 and then 77.
+// To allow every Kazakhstan mobile number write '77' here (+7 7xx), or '7' for any +7 number.
+const PHONE_PREFIX = '77';
+const PHONE_LENGTH = 11;
+
 function validatePhone(value, isRequired) {
-    const phone = value.replace(/[\s()-]/g, '');
-    if (phone === '') {
+    const digits = value.replace(/\D/g, '');
+    if (digits === '') {
         return isRequired ? 'Enter your phone number.' : '';
     }
-    return /^\+?\d{10,15}$/.test(phone) ? '' : 'Phone must contain 10-15 digits, e.g. +7 700 000 0000.';
+    if (!digits.startsWith(PHONE_PREFIX) || digits.length !== PHONE_LENGTH) {
+        return `Phone must have ${PHONE_LENGTH} digits and start with +${PHONE_PREFIX}, e.g. +7 777 123 45 67.`;
+    }
+    return '';
+}
+
+// ---------- Input locks (pure functions: text in, text out) ----------
+// Keeps only digits, at most maxLength of them.
+function keepDigits(value, maxLength) {
+    return value.replace(/\D/g, '').slice(0, maxLength);
+}
+
+// 1234567890123456 -> "1234 5678 9012 3456" (16 digits at most)
+function formatCardNumber(value) {
+    return keepDigits(value, 16).replace(/(\d{4})(?=\d)/g, '$1 ');
+}
+
+// 0828 -> "08/28": the slash is added by the code; a month can only be 01-12.
+function formatExpiry(value) {
+    let digits = keepDigits(value, 4);
+    if (digits.length > 0 && digits[0] > '1') {
+        digits = `0${digits}`.slice(0, 4); // 5 can only mean 05
+    }
+    if (digits.length > 1 && digits[0] === '1' && digits[1] > '2') {
+        digits = digits[0] + digits.slice(2); // 13-19 do not exist: the extra digit is ignored
+    }
+    if (digits.slice(0, 2) === '00') {
+        digits = `0${digits.slice(2)}`; // there is no month 00
+    }
+    return digits.length > 2 ? `${digits.slice(0, 2)}/${digits.slice(2)}` : digits;
+}
+
+// Any typed or pasted number becomes "+7 777 123 45 67". The prefix can not be deleted or changed:
+// the visitor's digits always continue after it.
+function formatPhone(value) {
+    let digits = keepDigits(value, 20);
+    if (digits === '') {
+        return '';
+    }
+    if (digits.startsWith('8')) {
+        digits = `7${digits.slice(1)}`; // 8 777 ... is how many people write it at home
+    }
+    let common = 0;
+    while (common < PHONE_PREFIX.length && digits[common] === PHONE_PREFIX[common]) {
+        common += 1;
+    }
+    const number = (PHONE_PREFIX + digits.slice(common)).slice(0, PHONE_LENGTH);
+    const rest = number.slice(1); // everything after the country code 7
+    const groups = [rest.slice(0, 3), rest.slice(3, 6), rest.slice(6, 8), rest.slice(8, 10)].filter(group => group !== '');
+    return `+7 ${groups.join(' ')}`;
 }
 
 // ---------- Form feedback helpers (classes prepared at midterm: error, error-message, hidden) ----------
