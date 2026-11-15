@@ -25,6 +25,11 @@ const PASSWORD_RULES = [
     { id: 'special', text: 'One special character', test: value => /[^A-Za-z0-9]/.test(value) }
 ];
 
+// Eye icons (inline SVG, drawn in the style of the free Feather icon set; they use the text colour of the
+// button). They are our own constants, never visitor input, so html() is safe for them.
+const EYE_ICON = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+const EYE_OFF_ICON = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
+
 function isPasswordStrong(value) {
     return PASSWORD_RULES.every(rule => rule.test(value));
 }
@@ -108,16 +113,34 @@ $(function () {
         $('<li>').appendTo($checklist);
     });
 
-    const $toggle = $('<button>', { type: 'button', class: 'btn btn-outline btn-sm', text: 'Show password', 'aria-pressed': 'false' });
+    // attr() is right for "type" and aria-*: they are HTML attributes we want to change in the markup.
+    // html() swaps the icon; the icon strings are our own constants, never visitor input.
+    function setEye($input, $eye, isVisible) {
+        const text = isVisible ? 'Hide password' : 'Show password';
+        $input.attr('type', isVisible ? 'text' : 'password');
+        $eye.html(isVisible ? EYE_OFF_ICON : EYE_ICON).attr({ 'aria-pressed': String(isVisible), 'aria-label': text, title: text });
+    }
 
+    // One row per password field: label, then the field with its eye button on the right
+    // (d-flex / align-items-center / gap-2 are Bootstrap utilities that already exist in the grid CSS).
+    const eyes = [];
     function buildRow(labelText, $input) {
-        return $('<div>', { class: 'form-row' }).append($('<label>').attr('for', $input.attr('id')).text(labelText), $input);
+        const $eye = $('<button>', { type: 'button', class: 'btn btn-outline' });
+        setEye($input, $eye, false);
+        // Clicking the eye of a field shows or hides the text of that field only.
+        $eye.on('click', function () {
+            setEye($input, $(this), $input.attr('type') === 'password');
+        });
+        eyes.push({ $input: $input, $eye: $eye });
+
+        const $line = $('<div>', { class: 'd-flex align-items-center gap-2' }).append($input, $eye);
+        $input.data('errorHost', $line); // error messages go under the whole line, not between the field and the eye
+        return $('<div>', { class: 'form-row' }).append($('<label>').attr('for', $input.attr('id')).text(labelText), $line);
     }
     $helper.before(
         buildRow('Password', $inputs.password),
         $checklist,
-        buildRow('Confirm password', $inputs.confirm),
-        $('<div>', { class: 'form-row' }).append($toggle)
+        buildRow('Confirm password', $inputs.confirm)
     );
 
     // Chain: each() visits every <li>; $(this) is the current item; then three methods in a row:
@@ -131,10 +154,10 @@ $(function () {
         });
     }
 
-    // attr() is right for "type" and aria-*: they are HTML attributes we want to change in the markup.
-    function setPasswordVisibility(isVisible) {
-        $inputs.password.add($inputs.confirm).attr('type', isVisible ? 'text' : 'password');
-        $toggle.text(isVisible ? 'Hide password' : 'Show password').attr('aria-pressed', String(isVisible));
+    function hideAllPasswords() {
+        $.each(eyes, function (index, pair) {
+            setEye(pair.$input, pair.$eye, false);
+        });
     }
 
     updateChecklist('');
@@ -153,10 +176,6 @@ $(function () {
         $checklist.slideDown(250);
     });
 
-    $toggle.on('click', function () {
-        setPasswordVisibility($inputs.password.attr('type') === 'password');
-    });
-
     // The Clear button also fades the message out; the form's own reset event does the cleaning.
     $('#js-registration-reset-btn').on('click', function () {
         jqHideBox($box);
@@ -165,7 +184,7 @@ $(function () {
     $form.on('reset', function () {
         jqClearErrors($form);
         updateChecklist('');
-        setPasswordVisibility(false);
+        hideAllPasswords();
     });
 
     // The "required" attributes stay in the HTML: the browser checks them first.

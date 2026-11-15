@@ -20,10 +20,14 @@ function jqClearFieldError($input) {
     $input.removeClass('error').removeAttr('aria-invalid aria-describedby');
 }
 
+// Shows a specific message right after the field and marks the field as invalid.
+// A field that sits in a row with other controls (for example the eye button of a password field)
+// can store that row in .data('errorHost'): the message then goes after the row, not inside it.
 function jqFieldError($input, message) {
     jqClearFieldError($input);
     const errorId = `${$input.attr('id')}-error`;
-    $('<div>', { id: errorId, class: 'error-message', text: `Error: ${message}` }).insertAfter($input);
+    const $host = $input.data('errorHost') || $input;
+    $('<div>', { id: errorId, class: 'error-message', text: `Error: ${message}` }).insertAfter($host);
     $input.addClass('error').attr({ 'aria-invalid': 'true', 'aria-describedby': errorId });
 }
 

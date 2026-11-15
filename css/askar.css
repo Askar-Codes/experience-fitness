@@ -20,7 +20,7 @@
 
 .registration-note {
     display: block;
-    font-size: 12px;
+    font-size: 15px;
     color: var(--color-muted);
     margin-bottom: 12px;
 }
@@ -33,7 +33,7 @@ fieldset {
 
 legend {
     font-family: var(--font-heading);
-    font-size: 14px;
+    font-size: 18px;
     letter-spacing: 0.03em;
     margin-bottom: 8px;
     padding: 0;
@@ -41,7 +41,7 @@ legend {
 
 label {
     display: block;
-    font-size: 13px;
+    font-size: 16px;
     color: var(--color-muted);
     margin-bottom: 4px;
 }
@@ -54,7 +54,7 @@ textarea {
     border: 1px solid #ccc;
     border-radius: 6px;
     font-family: inherit;
-    font-size: 14px;
+    font-size: 17px;
     background-color: white;
 }
 
@@ -161,18 +161,19 @@ input:is(:focus), select:focus, textarea:focus {
 .plan-name {
     font-family: var(--font-heading);
     letter-spacing: 0.03em;
+    font-size: 20px;
 }
 
 .plan-price {
     color: var(--color-muted);
-    font-size: 14px;
+    font-size: 17px;
 }
 
 .plan-badge {
     align-self: flex-start;
     background-color: var(--color-green);
     color: var(--color-black);
-    font-size: 11px;
+    font-size: 14px;
     font-weight: 600;
     padding: 2px 8px;
     border-radius: 4px;
@@ -216,12 +217,12 @@ input:is(:focus), select:focus, textarea:focus {
 
 .trainer-name {
     margin: 0 0 4px 0;
-    font-size: 26px;
+    font-size: 28px;
 }
 
 .trainer-role {
     color: var(--color-green);
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -229,7 +230,7 @@ input:is(:focus), select:focus, textarea:focus {
 }
 
 .trainer-bio {
-    font-size: 17px;
+    font-size: 18px;
     color: var(--color-muted);
     margin: 0 0 16px 0;
     flex-grow: 1;
@@ -240,7 +241,7 @@ input:is(:focus), select:focus, textarea:focus {
     padding-left: 12px;
     border-left: 3px solid var(--color-green);
     font-style: italic;
-    font-size: 16px;
+    font-size: 20px;
     color: var(--color-black);
 }
 /* ==========================================================
@@ -254,7 +255,7 @@ input:is(:focus), select:focus, textarea:focus {
     flex-direction: column;
     gap: 4px;
     margin: 0 0 16px;
-    font-size: 16px;
+    font-size: 20px;
 }
 
 /* Summary lists inside confirmation boxes (built by JavaScript) */
@@ -310,6 +311,7 @@ input:is(:focus), select:focus, textarea:focus {
     cursor: pointer;
     font-weight: bold;
     transition: all 0.3s ease;
+    font-size: 17px;
 }
 
 .tb-book-btn:hover,
@@ -404,7 +406,7 @@ input:is(:focus), select:focus, textarea:focus {
     display: block;
     margin-bottom: 4px;
     font-weight: bold;
-    font-size: 0.9rem;
+    font-size: 1rem;
 }
 
 .tb-input {
@@ -432,7 +434,7 @@ input:is(:focus), select:focus, textarea:focus {
     display: block;
     margin-top: 4px;
     color: #b02a37;
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     font-weight: bold;
 }
 
@@ -495,7 +497,7 @@ input:is(:focus), select:focus, textarea:focus {
 .tb-slot-type {
     display: block;
     color: #aaa;
-    font-size: 0.9em;
+    font-size: 1em;
 }
 
 .tb-slot-meta {
@@ -523,6 +525,7 @@ input:is(:focus), select:focus, textarea:focus {
     cursor: pointer;
     font-weight: bold;
     transition: all 0.2s;
+    font-size: 17px;
 }
 
 .tb-submit-btn:hover,
@@ -540,6 +543,7 @@ input:is(:focus), select:focus, textarea:focus {
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
+    font-size: 16px;
 }
 
 .tb-secondary-btn:focus-visible {
@@ -551,7 +555,7 @@ input:is(:focus), select:focus, textarea:focus {
 .tb-live {
     margin: 5px 0 15px;
     font-weight: bold;
-    font-size: 1.05rem;
+    font-size: 1.15rem;
     color: #000;
 }
 
@@ -582,7 +586,7 @@ input:is(:focus), select:focus, textarea:focus {
 
 .tb-note {
     padding: 10px;
-    font-size: 0.9rem;
+    font-size: 1rem;
     background-color: #f3f3f3;
     border-left: 4px solid #000;
 }
@@ -623,7 +627,7 @@ input:is(:focus), select:focus, textarea:focus {
 
 .cart-empty {
     margin: 0;
-    font-size: 14px;
+    font-size: 16px;
     color: var(--color-muted);
 }
 
@@ -648,7 +652,7 @@ input:is(:focus), select:focus, textarea:focus {
 }
 
 .cart-line-price {
-    font-size: 13px;
+    font-size: 15px;
     color: var(--color-muted);
 }
 
@@ -689,6 +693,9 @@ input:is(:focus), select:focus, textarea:focus {
 .main-header {
     background-color: #111;
     padding: 15px 0;
+    position: sticky; /* the menu stays at the top and moves with the scroll */
+    top: 0;
+    z-index: 800; /* above the page, below the pop-up windows (900+) */
 }
 
 /* Увеличиваем максимальную ширину почти на весь экран */
@@ -741,7 +748,7 @@ input:is(:focus), select:focus, textarea:focus {
 }
 
 .nav-list a {
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 600;
     text-decoration: none;
     color: #fff;
@@ -764,7 +771,7 @@ input:is(:focus), select:focus, textarea:focus {
 }
 
 .btn-login {
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 600;
     color: #fff;
     text-decoration: none;
@@ -775,7 +782,7 @@ input:is(:focus), select:focus, textarea:focus {
 }
 
 .btn-trial {
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 600;
     color: #fff;
     background-color: transparent;

@@ -7,7 +7,6 @@
 
 // OPENING_HOURS (the opening hours of the club) is defined once in main.js.
 
-const LEVEL_LABELS = { beginner: 'Beginner', medium: 'Intermediate', advanced: 'Advanced' };
 const GOAL_LABELS = { 'weight-loss': 'Weight loss', muscle: 'Muscle gain', fitness: 'General fitness' };
 const TRIAL_MINUTES = 45;
 const LAST_START_BEFORE_CLOSE = 60; // minutes: the session must fit before closing
@@ -39,8 +38,6 @@ function formatClock(totalMinutes) {
 }
 
 function readBookingValues() {
-    const form = bookingRefs.form;
-    const checked = form.querySelector('input[name="level"]:checked');
     return {
         name: byId('js-booking-name').value,
         email: byId('js-booking-email').value,
@@ -48,8 +45,6 @@ function readBookingValues() {
         age: byId('js-booking-age').value,
         date: byId('js-booking-visit-date').value,
         time: bookingRefs.time.value,
-        level: checked !== null ? checked.value : '',
-        agree: byId('js-booking-agree').checked,
         goal: byId('js-booking-goal').value,
         comment: byId('js-booking-comment').value
     };
@@ -59,9 +54,8 @@ function summarizeRequest(values) {
     const date = parseDate(values.date);
     const dateText = date !== null ? `${getWeekdayName(date)} ${values.date}` : 'date not chosen';
     const timeText = values.time !== '' ? values.time : 'time not chosen';
-    const levelText = values.level !== '' ? LEVEL_LABELS[values.level] : 'level not chosen';
     const goalText = values.goal !== '' ? GOAL_LABELS[values.goal] : 'no goal selected';
-    return `Your request: ${dateText}, ${timeText} | about ${TRIAL_MINUTES} minutes | ${levelText} | ${goalText}`;
+    return `Your request: ${dateText}, ${timeText} | about ${TRIAL_MINUTES} minutes | ${goalText}`;
 }
 
 // Returns an object like { date: 'message' }; an empty object means the form is valid.
@@ -123,13 +117,6 @@ function validateTrial(values) {
         }
     }
 
-    if (values.level === '') {
-        errors.level = 'Select your fitness level.';
-    }
-    if (!values.agree) {
-        errors.agree = 'You must agree to the club rules.';
-    }
-
     return errors;
 }
 
@@ -165,7 +152,7 @@ function initBooking() {
     // Start time field (created with DOM methods, next to the date field).
     const dateInput = byId('js-booking-visit-date');
     dateInput.min = toISODate(new Date());
-    const timeCol = createEl('div', 'col-12 col-md-3');
+    const timeCol = createEl('div', 'col-12');
     const timeLabel = createEl('label', '', 'Start Time');
     timeLabel.htmlFor = 'js-booking-time';
     const timeInput = createEl('input');
@@ -193,9 +180,7 @@ function initBooking() {
         phone: { input: byId('js-booking-phone') },
         age: { input: byId('js-booking-age') },
         date: { input: dateInput },
-        time: { input: timeInput },
-        level: { input: byId('js-booking-level-beginner'), host: byId('js-booking-level-beginner').closest('fieldset') },
-        agree: { input: byId('js-booking-agree'), host: byId('js-booking-agree').closest('p') }
+        time: { input: timeInput }
     };
 
     form.addEventListener('submit', handleBookingSubmit);
@@ -212,7 +197,7 @@ function updateLive() {
 
 function fieldKeyFor(target) {
     const fields = bookingRefs.fields;
-    return Object.keys(fields).find(key => fields[key].input === target || (key === 'level' && target.name === 'level'));
+    return Object.keys(fields).find(key => fields[key].input === target);
 }
 
 function handleBookingChange(event) {
@@ -226,7 +211,7 @@ function handleBookingChange(event) {
 function handleBookingReset() {
     clearErrors(bookingRefs.form);
     hideConfirmation(bookingRefs.box);
-    bookingRefs.live.textContent = summarizeRequest({ date: '', time: '', level: '', goal: '' });
+    bookingRefs.live.textContent = summarizeRequest({ date: '', time: '', goal: '' });
 }
 
 function handleBookingSubmit(event) {
@@ -257,7 +242,6 @@ function handleBookingSubmit(event) {
         ['Date', `${getWeekdayName(date)}, ${values.date}`],
         ['Start time', values.time],
         ['Duration', `About ${TRIAL_MINUTES} minutes`],
-        ['Fitness level', LEVEL_LABELS[values.level]],
         ['Goal', values.goal !== '' ? GOAL_LABELS[values.goal] : 'Not specified'],
         ['Name', values.name.trim()],
         ['Email', values.email.trim()],

@@ -109,7 +109,7 @@ function validateEmail(value) {
 // Phone lock: a number is the country code 7 and 10 more digits (11 digits in total) and it must
 // start with the locked prefix. PHONE_PREFIX = '777' means "+777": country code 7 and then 77.
 // To allow every Kazakhstan mobile number write '77' here (+7 7xx), or '7' for any +7 number.
-const PHONE_PREFIX = '77';
+const PHONE_PREFIX = '777';
 const PHONE_LENGTH = 11;
 
 function validatePhone(value, isRequired) {
@@ -258,8 +258,132 @@ function handleNavKeydown(event) {
     }
 }
 
+// Small screens (below 992 px): the desktop menu and the right-hand buttons are hidden by the grid classes
+// d-none d-lg-flex, and a "Menu" button opens a pop-up window with the same links. The links are copied
+// from the header, so the pages and their names are written in one place only (the HTML).
+function buildMobileMenu() {
+    const container = document.querySelector('.header-container');
+    const pageLinks = document.querySelectorAll('.main-nav a');
+    const trial = document.querySelector('.header-actions .btn-trial');
+    const login = document.querySelector('.header-actions .btn-login');
+    if (container === null || pageLinks.length === 0 || trial === null || login === null) {
+        return;
+    }
+
+    // d-flex + justify-content-center on a link centres its text (Bootstrap utilities that already exist).
+    function copyLink(source, className) {
+        const link = createEl('a', `${className} d-flex justify-content-center`, source.textContent.trim());
+        link.href = source.getAttribute('href');
+        if (source.classList.contains('active')) {
+            link.classList.add('selected'); // the page the visitor is on
+        }
+        return link;
+    }
+
+    const menuButton = createEl('button', 'btn btn-outline btn-sm d-lg-none', '\u2630 Menu');
+    menuButton.type = 'button';
+    menuButton.setAttribute('aria-haspopup', 'dialog');
+    menuButton.setAttribute('aria-expanded', 'false');
+    menuButton.setAttribute('aria-controls', 'site-menu');
+    container.appendChild(menuButton);
+
+    // Column 1: Home, Trainers, Memberships in three rows. Column 2: Free Trial. Column 3: Log In.
+    // On a phone columns 2 and 3 are stacked in the right half; from 576 px all three stand side by side.
+    const pagesColumn = createEl('div', 'col-6 col-sm-4');
+    const pagesList = createEl('div', 'd-flex flex-column gap-2');
+    pageLinks.forEach(source => pagesList.appendChild(copyLink(source, 'btn btn-outline')));
+    pagesColumn.appendChild(pagesList);
+
+    const trialColumn = createEl('div', 'col-12 col-sm-6');
+    trialColumn.appendChild(copyLink(trial, 'btn'));
+    const loginColumn = createEl('div', 'col-12 col-sm-6');
+    loginColumn.appendChild(copyLink(login, 'btn btn-outline'));
+    const buttonsRow = createEl('div', 'row g-3');
+    buttonsRow.append(trialColumn, loginColumn);
+    const buttonsColumn = createEl('div', 'col-6 col-sm-8');
+    buttonsColumn.appendChild(buttonsRow);
+
+    const grid = createEl('div', 'row g-3');
+    grid.append(pagesColumn, buttonsColumn);
+
+    const closeButton = createEl('button', 'tb-close', '\u00d7');
+    closeButton.type = 'button';
+    closeButton.setAttribute('aria-label', 'Close menu');
+    const panel = createEl('div', 'tb-panel');
+    panel.append(closeButton, createEl('h2', 'tb-title', 'Menu'), grid);
+    const overlay = createEl('div', 'tb-overlay tb-hidden');
+    overlay.id = 'site-menu';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-label', 'Site menu');
+    overlay.appendChild(panel);
+    document.body.appendChild(overlay);
+
+    function isOpen() {
+        return !overlay.classList.contains('tb-hidden');
+    }
+
+    function openMenu() {
+        overlay.classList.remove('tb-hidden');
+        document.body.classList.add('tb-no-scroll');
+        menuButton.setAttribute('aria-expanded', 'true');
+        // Focus goes to the link of the page the visitor is on (focus paints it green).
+        // On pages that are not in the menu (booking, registration) it goes to the close button,
+        // so no wrong link looks selected.
+        const current = pagesList.querySelector('a.selected');
+        (current !== null ? current : closeButton).focus();
+    }
+
+    function closeMenu(restoreFocus) {
+        overlay.classList.add('tb-hidden');
+        document.body.classList.remove('tb-no-scroll');
+        menuButton.setAttribute('aria-expanded', 'false');
+        if (restoreFocus) {
+            menuButton.focus();
+        }
+    }
+
+    menuButton.addEventListener('click', openMenu);
+    closeButton.addEventListener('click', () => closeMenu(true));
+    overlay.addEventListener('click', event => {
+        if (event.target === overlay) {
+            closeMenu(true); // a click on the dark background
+        }
+    });
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && isOpen()) {
+            closeMenu(true);
+        }
+    });
+    // Tab stays inside the open menu.
+    overlay.addEventListener('keydown', event => {
+        if (event.key !== 'Tab') {
+            return;
+        }
+        const items = Array.from(overlay.querySelectorAll('a, button'));
+        const first = items[0];
+        const last = items[items.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+        }
+    });
+    // If the window becomes wide again, the desktop menu is back and the pop-up is not needed.
+    if (typeof window.matchMedia === 'function') {
+        window.matchMedia('(min-width: 992px)').addEventListener('change', event => {
+            if (event.matches && isOpen()) {
+                closeMenu(false);
+            }
+        });
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     setActiveNav();
+    buildMobileMenu();
     document.addEventListener('keydown', handleNavKeydown);
 });
 

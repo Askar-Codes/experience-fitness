@@ -17,11 +17,9 @@
 
 const CLUB_ADDRESS = 'улица Санжара Асфендиярова, 6, Астана';
 
-// The map is found by the address above. If the pin is not exactly on the club:
-// open the club in Google Maps -> Share -> "Embed a map" -> copy the src="..." address
-// and paste it instead of the line below.
-const MAP_EMBED_URL = `https://maps.google.com/maps?q=${encodeURIComponent(CLUB_ADDRESS)}&z=16&hl=en&output=embed`;
-const MAP_LINK_URL = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(CLUB_ADDRESS)}`;
+const CLUB_LAT_LNG = encodeURIComponent('Experience Fitness, ул. Санжара Асфендиярова 6, Астана');
+const MAP_EMBED_URL = `https://maps.google.com/maps?q=${CLUB_LAT_LNG}&z=17&hl=en&output=embed`;
+const MAP_LINK_URL = `https://www.google.com/maps/search/?api=1&query=${CLUB_LAT_LNG}`;git add .
 
 // ---------- Pure helpers (no page access) ----------
 function formatHour(hour) {
