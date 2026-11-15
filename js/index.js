@@ -19,7 +19,7 @@ const CLUB_ADDRESS = 'улица Санжара Асфендиярова, 6, А�
 
 const CLUB_LAT_LNG = encodeURIComponent('Experience Fitness, ул. Санжара Асфендиярова 6, Астана');
 const MAP_EMBED_URL = `https://maps.google.com/maps?q=${CLUB_LAT_LNG}&z=17&hl=en&output=embed`;
-const MAP_LINK_URL = `https://www.google.com/maps/search/?api=1&query=${CLUB_LAT_LNG}`;git add .
+const MAP_LINK_URL = `https://www.google.com/maps/search/?api=1&query=${CLUB_LAT_LNG}`;
 
 // ---------- Pure helpers (no page access) ----------
 function formatHour(hour) {

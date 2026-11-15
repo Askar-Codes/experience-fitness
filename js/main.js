@@ -109,7 +109,7 @@ function validateEmail(value) {
 // Phone lock: a number is the country code 7 and 10 more digits (11 digits in total) and it must
 // start with the locked prefix. PHONE_PREFIX = '777' means "+777": country code 7 and then 77.
 // To allow every Kazakhstan mobile number write '77' here (+7 7xx), or '7' for any +7 number.
-const PHONE_PREFIX = '777';
+const PHONE_PREFIX = '77';
 const PHONE_LENGTH = 11;
 
 function validatePhone(value, isRequired) {

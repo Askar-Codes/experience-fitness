@@ -397,7 +397,23 @@ function buildBookingOverlay() {
     const phoneInput = createEl('input', 'tb-input');
     phoneInput.type = 'tel';
     phoneInput.autocomplete = 'tel';
-    phoneInput.placeholder = '+7 700 000 0000';
+    phoneInput.inputMode = 'tel';
+    phoneInput.maxLength = 16;
+    phoneInput.placeholder = '+7 777 000 00 00';
+
+    phoneInput.addEventListener('focus', () => {
+        if (phoneInput.value === '') {
+            phoneInput.value = formatPhone(PHONE_PREFIX);
+        }
+    });
+    phoneInput.addEventListener('input', () => {
+        phoneInput.value = formatPhone(phoneInput.value);
+    });
+    phoneInput.addEventListener('blur', () => {
+        if (keepDigits(phoneInput.value, 20).length <= PHONE_PREFIX.length) {
+            phoneInput.value = '';
+        }
+    });
     const dateInput = createEl('input', 'tb-input');
     dateInput.type = 'date';
     const qtyInput = createEl('input', 'tb-input');
